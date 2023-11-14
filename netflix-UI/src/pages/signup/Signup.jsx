@@ -48,7 +48,9 @@ const Signup = () => {
 						src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
 						alt=""
 					/>
-					<button className="loginButton">Sign In</button>
+					<Link to={'/login'}>
+						<button className="loginButton">Sign In</button>
+					</Link>
 				</div>
 			</div>
 			<div className="container">
@@ -60,79 +62,83 @@ const Signup = () => {
 				<Formik
 					initialValues={{ email: '', password: '', username: '' }}
 					onSubmit={(values) => {
-						handleFinish(values.email, values.password, values.username)
+						handleFinish(values.email, values.password, 
+            // values.username
+            )
 						// console.log(values.email, values.password, values.username)
 					}}
 					validationSchema={signupFormSchema}
 					validateOnMount={true}
 				>
-        {({
+					{({
 						handleChange,
 						handleBlur,
 						handleSubmit,
 						values,
 						errors,
 						isValid,
-					}) => ( 
-            <>
-            {!email ? (
-					<div className="input">
-						<input
-							type="email"
-							placeholder="Email"
-							ref={emailRef}
-              onChange={handleChange('email')}
-											onBlur={handleBlur('email')}
-											value={values.email}
-											className={`textInput ${
-												values.email.length < 1 ||
-												Validator.validate(values.email)
-													? 'valid'
-													: 'invalid'
-											}`}
-						/>
-						<button className="signupButton" onClick={handleStart} 	disabled={!Validator.validate(values.email)}>
-							Get Started
-						</button>
-					</div>
-				) : (
-					<form className="input">
-						<input
-							type="username"
-							placeholder="Username"
-							ref={usernameRef}
-							onChange={handleChange('username')}
-											onBlur={handleBlur('username')}
-											value={values.username}
-											className={`textInput ${
-												values.username.length > 0 ? 'valid' : 'invalid'
-											}`}
-						/>
-						<input
-							type="password"
-							placeholder="Password"
-							ref={passwordRef}
-							onChange={handleChange('password')}
-											onBlur={handleBlur('password')}
-											value={values.password}
-											className={`textInput ${
-												values.password.length > 5 ? 'valid' : 'invalid'
-											}`}
-						/>
-						<button
-						className={`signupButton ${!isValid && 'invalid'}`}
-											onClick={handleSubmit}
-											disabled={!isValid}
-						>
-							Start
-						</button>
-					</form>
-				)}
-            </>
-          )}
-
-        </Formik>
-				
+					}) => (
+						<>
+							{!email ? (
+								<div className="input">
+									<input
+										type="email"
+										placeholder="Email"
+										ref={emailRef}
+										onChange={handleChange('email')}
+										onBlur={handleBlur('email')}
+										value={values.email}
+										className={`textInput ${
+											values.email.length < 1 ||
+											Validator.validate(values.email)
+												? 'valid'
+												: 'invalid'
+										}`}
+									/>
+									<button
+										className="signupButton"
+										onClick={handleStart}
+										disabled={!Validator.validate(values.email)}
+									>
+										Get Started
+									</button>
+								</div>
+							) : (
+								<form className="input">
+									<input
+										type="username"
+										placeholder="Username"
+										ref={usernameRef}
+										onChange={handleChange('username')}
+										onBlur={handleBlur('username')}
+										value={values.username}
+										className={`textInput ${
+											values.username.length > 0 ? 'valid' : 'invalid'
+										}`}
+									/>
+									<input
+										type="password"
+										placeholder="Password"
+										ref={passwordRef}
+										onChange={handleChange('password')}
+										onBlur={handleBlur('password')}
+										value={values.password}
+										className={`textInput ${
+											values.password.length > 5 ? 'valid' : 'invalid'
+										}`}
+									/>
+									<button
+										className={`signupButton ${!isValid && 'invalid'}`}
+										onClick={handleSubmit}
+										disabled={!isValid}
+									>
+										Start
+									</button>
+								</form>
+							)}
+						</>
+					)}
+				</Formik>
 			</div>
 		</div>
 	)

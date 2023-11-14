@@ -108,9 +108,9 @@ const Login = () => {
 
 								<div className="signupLink">
 									New to Netflix? 
-                  {/* <Link to={'/signup'}> */}
+                  <Link to={'/signup'}>
 									<b>Sign up now</b>
-									{/* </Link> */}
+									</Link>
 								</div>
 								<small>
 									This page is protected by Google reCAPTCHA to ensure you're

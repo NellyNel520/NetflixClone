@@ -1,9 +1,17 @@
 import './home.scss'
-import React from 'react'
-
+import {useEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getGenres } from '../../store'
+import Navbar from '../../components/navbar/Navbar'
 const Home = () => {
+ 
+
+
+  
   return (
-    <div>Home</div>
+    <div className='home'>
+      <Navbar />
+    </div>
   )
 }
 
