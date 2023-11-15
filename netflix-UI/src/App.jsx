@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Signup from './pages/signup/Signup'
 import Login from './pages/login/Login'
 import Home from './pages/home/Home'
+import Movies from './pages/movies/Movies'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -12,22 +13,26 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-      <Route
+				<Route
 					path="/"
 					exact
-					element={currentUser ? <Home  /> : <Navigate to={'/signup'} />}
+					element={currentUser ? <Home /> : <Navigate to={'/signup'} />}
 				/>
 				<Route
 					path="/signup"
 					exact
-					element={!currentUser ? <Signup /> : <Navigate to={'/'} />} 
+					element={!currentUser ? <Signup /> : <Navigate to={'/'} />}
 				/>
 				<Route
 					path="/login"
 					exact
 					element={!currentUser ? <Login /> : <Navigate to={'/'} />}
 				/>
-			
+				<Route
+					exact
+					path="/movies"
+					element={currentUser ? <Movies /> : <Navigate to={'/'} />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	)

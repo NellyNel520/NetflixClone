@@ -28,6 +28,23 @@ const TrendingItem = ({ index, item }) => {
 	const dispatch = useDispatch()
 	// const savedList = useSelector((state) => state.netflix.savedList)
 	// const [isSaved, setIsSaved] = useState(false)
+
+	useEffect(() => {
+		const getMovieTrailer = async () => {
+			await movieTrailer(item.name, {
+				id: true,
+				multi: true,
+			
+			})
+				.then((response) =>
+					// console.log(response, 'herrrreeeee')
+					setVideoId(response[1])
+				)
+				.catch((err) => console.log(err))
+		}
+
+		getMovieTrailer()
+	}, [item])
 	return (
 		<div
 			className="trendingListItem"

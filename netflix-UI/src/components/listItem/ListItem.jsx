@@ -16,13 +16,13 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 
 const ListItem = ({ index, movie, type }) => {
-  const [isHovered, setIsHovered] = useState(false)
+	const [isHovered, setIsHovered] = useState(false)
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-  
-	// const [videoId, setVideoId] = useState('')
+
+	const [videoId, setVideoId] = useState('')
 	// const [runtime, setRuntime] = useState('')
 	// const [releaseDates, setReleaseDates] = useState([])
 
@@ -31,7 +31,6 @@ const ListItem = ({ index, movie, type }) => {
 	// const [isSaved, setIsSaved] = useState(false)
 	// console.log(movie)
 
-	
 	// const hours = Math.floor(runtime / 60)
 	// const mins = runtime % 60
 
@@ -39,10 +38,25 @@ const ListItem = ({ index, movie, type }) => {
 	// 	return item.iso_3166_1 === 'US'
 	// })
 	// const rating = UsRating[0]?.release_dates[0]?.certification
+	useEffect(() => {
+		const getMovieTrailer = async () => {
+			await movieTrailer(movie.name, {
+				id: true,
+				multi: true,
+			
+			})
+				.then((response) =>
+					// console.log(response, 'herrrreeeee')
+					setVideoId(response[1])
+				)
+				.catch((err) => console.log(err))
+		}
 
+		getMovieTrailer()
+	}, [movie, type])
 
-  return (
-    <div
+	return (
+		<div
 			className="listItem"
 			style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
@@ -54,7 +68,7 @@ const ListItem = ({ index, movie, type }) => {
 
 			{isHovered && (
 				<div>
-					{/* {videoId ? (
+					{videoId ? (
 						<YouTube
 							videoId={videoId}
 							opts={{
@@ -73,16 +87,8 @@ const ListItem = ({ index, movie, type }) => {
 							// 	})
 							// }
 						/>
-					)} */}
-          <img
-							src={`${BASE_URL}/${movie.image}`}
-							alt="movie cover"
-							// onClick={() =>
-							// 	navigate('/watch', {
-							// 		state: { videoId: videoId, movie: movie },
-							// 	})
-							// }
-						/>
+					)}
+			
 					<div className="itemInfo">
 						<p>{movie.name}</p>
 
@@ -113,11 +119,11 @@ const ListItem = ({ index, movie, type }) => {
 									/>
 								)} */}
 
-                <CheckIcon
-										className="icon"
-										title="Already saved"
-										// onClick={removeFromList}
-									/>
+								<CheckIcon
+									className="icon"
+									title="Already saved"
+									// onClick={removeFromList}
+								/>
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
@@ -127,18 +133,18 @@ const ListItem = ({ index, movie, type }) => {
 						{/* May add this info to item details page / modal opposed to showing on hover too many axios calls not */}
 
 						{/* <div className="itemInfoTop"> */}
-							{/* {rating ? (
+						{/* {rating ? (
 								<span className="limit">{rating}</span>
 							) : (
 								<span className="limit">NR</span>
 							)} */}
-              {/* <span className="limit">NR</span> */}
+						{/* <span className="limit">NR</span> */}
 
-							{/* <span className="time">
+						{/* <span className="time">
 								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
 							</span> */}
 
-							{/* <span className="limit">4K</span> */}
+						{/* <span className="limit">4K</span> */}
 						{/* </div> */}
 
 						<div className="genre">
@@ -151,7 +157,7 @@ const ListItem = ({ index, movie, type }) => {
 				</div>
 			)}
 		</div>
-  )
+	)
 }
 
 export default ListItem
