@@ -17,35 +17,35 @@ const Featured = ({ type, genres, itemList, i }) => {
 
   const [itemLogo, setItemLogo] = useState({})
 
-  // useEffect(() => {
-	// 	if (type) {
-	// 		axios
-	// 			.get(
-	// 				`https://api.themoviedb.org/3/${type}/${id}/images?api_key=1b3318f6cac22f830b1d690422391493&include_image_language=en
-	// 		`
-	// 			)
-	// 			.then((response) => {
-	// 				// console.log(response.data.logos, 'logo line 28')
-	// 				setItemLogo(response.data.logos[0].file_path)
-	// 			})
-	// 		// .catch((error) => {
-	// 		// 	console.log(error)
-	// 		// })
-	// 	} else {
-	// 		axios
-	// 			.get(
-	// 				`https://api.themoviedb.org/3/movie/${id}/images?api_key=1b3318f6cac22f830b1d690422391493&include_image_language=en
-	// 		`
-	// 			)
-	// 			.then((response) => {
-	// 				// console.log(response.data.logos, 'logo line 37')
-	// 				setItemLogo(response.data.logos[0].file_path)
-	// 			})
-	// 		// .catch((error) => {
-	// 		// 	console.log(error)
-	// 		// })
-	// 	}
-	// }, [])
+  useEffect(() => {
+		if (type) {
+			axios
+				.get(
+					`https://api.themoviedb.org/3/${type}/${id}/images?api_key=1b3318f6cac22f830b1d690422391493&include_image_language=en
+			`
+				)
+				.then((response) => {
+					// console.log(response.data.logos, 'logo line 28')
+					setItemLogo(response.data.logos[0].file_path)
+				})
+			// .catch((error) => {
+			// 	console.log(error)
+			// })
+		} else {
+			axios
+				.get(
+					`https://api.themoviedb.org/3/movie/${id}/images?api_key=1b3318f6cac22f830b1d690422391493&include_image_language=en
+			`
+				)
+				.then((response) => {
+					// console.log(response.data.logos, 'logo line 37')
+					setItemLogo(response.data.logos[0].file_path)
+				})
+			// .catch((error) => {
+			// 	console.log(error)
+			// })
+		}
+	})
 
 
   return (
