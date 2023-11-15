@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import List from '../list/List'
+import TrendingList from '../trendingList/TrendingList'
 // import ShowList from '../list/ShowList'
-// import TrendingList from '../trendingList/TrendingList'
 // import TrendingShowList from '../trendingList/TrendingShowList'
 
 const HomeLists = ({ movies, shows }) => {
@@ -20,11 +20,11 @@ const HomeLists = ({ movies, shows }) => {
 				type="movie"
 				title="Continue Watching"
 			/>
-			{/* <TrendingList
+			<TrendingList
 				data={getMoviesFromRange(0, 10)}
 				title="Top 10 Movies in the U.S. Today"
 				type="movie"
-			/> */}
+			/>
 			<List
 				data={getMoviesFromRange(26, 40)}
 				title="New Releases"
@@ -35,11 +35,11 @@ const HomeLists = ({ movies, shows }) => {
 				title="Action & Adventure"
 				type="movie"
 			/>
-			{/* <TrendingShowList
+			<TrendingList
 				data={getShowsFromRange(0, 10)}
 				title="Top 10 Shows in the U.S. Today"
 				type="tv"
-			/> */}
+			/>
 			<List data={getMoviesFromRange(41, 55)} title="Must Watch" />
 			<List
 				data={getShowsFromRange(11, 25)}
