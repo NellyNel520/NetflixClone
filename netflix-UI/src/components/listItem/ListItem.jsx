@@ -124,7 +124,7 @@ const ListItem = ({ index, movie, type }) => {
 							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
 
-						{/* May add this info to item details page / modal opposed to showing on hover too many axios calls at once */}
+						{/* May add this info to item details page / modal opposed to showing on hover too many axios calls not */}
 
 						{/* <div className="itemInfoTop"> */}
 							{/* {rating ? (

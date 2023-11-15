@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
 	getGenres,
-	fetchMovies
+	fetchMovies,
+	fetchShows
 } from '../../store'
 // components
 import Navbar from '../../components/navbar/Navbar'
@@ -13,6 +14,7 @@ import HomeLists from '../../components/listContainer/HomeLists'
 const Home = () => {
 	const genres = useSelector((state) => state.netflix.genres)
 	const movies = useSelector((state) => state.netflix.movies)
+	const shows = useSelector((state) => state.netflix.shows)
 	// const logo = useSelector((state) => state.netflix.logo)
 	// const [featuredLogo, setFeaturedLogo] = useState({})
 
@@ -27,6 +29,7 @@ const Home = () => {
 	useEffect(() => {
 		// if (genresLoaded) {
 		dispatch(fetchMovies({ genres, type: 'movie' }))
+		dispatch(fetchShows({ genres, type: 'tv' }))
 		// dispatch(getHomeLogo())
 		// }
 	}, [genres, dispatch])
@@ -55,7 +58,7 @@ const Home = () => {
 			<div className="listContainer">
 				<HomeLists
 					movies={movies}
-					// shows={shows}
+					shows={shows}
 				/>
 			</div>
 		</div>

@@ -5,13 +5,13 @@ import List from '../list/List'
 // import TrendingList from '../trendingList/TrendingList'
 // import TrendingShowList from '../trendingList/TrendingShowList'
 
-const HomeLists = ({ movies }) => {
+const HomeLists = ({ movies, shows }) => {
 	const getMoviesFromRange = (from, to) => {
 		return movies.slice(from, to)
 	}
-	// const getShowsFromRange = (from, to) => {
-	// 	return shows.slice(from, to)
-	// }
+	const getShowsFromRange = (from, to) => {
+		return shows.slice(from, to)
+	}
 
 	return ( 
 		<div>
@@ -41,16 +41,16 @@ const HomeLists = ({ movies }) => {
 				type="tv"
 			/> */}
 			<List data={getMoviesFromRange(41, 55)} title="Must Watch" />
-			{/* <ShowList
+			<List
 				data={getShowsFromRange(11, 25)}
 				type="tv"
 				title="Binge Worthy"
 			/>
-			<ShowList
+			<List
 				data={getShowsFromRange(26, 40)}
 				type="tv"
 				title="Popular on Netflix"
-			/> */}
+			/>
 		</div>
 	)
 }
