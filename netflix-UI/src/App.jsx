@@ -4,6 +4,7 @@ import Signup from './pages/signup/Signup'
 import Login from './pages/login/Login'
 import Home from './pages/home/Home'
 import Movies from './pages/movies/Movies'
+import Shows from './pages/shows/Shows'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -32,6 +33,11 @@ function App() {
 					exact
 					path="/movies"
 					element={currentUser ? <Movies /> : <Navigate to={'/'} />}
+				/>
+				<Route
+					exact
+					path="/series"
+					element={currentUser ? <Shows /> : <Navigate to={'/'} />}
 				/>
 			</Routes>
 		</BrowserRouter>
