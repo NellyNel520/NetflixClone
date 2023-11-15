@@ -8,7 +8,6 @@ import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
-// import { removeMovieFromLiked } from '../../store'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
@@ -30,7 +29,18 @@ const ListItem = ({ index, movie, type }) => {
 	// const dispatch = useDispatch()
 	// const savedList = useSelector((state) => state.netflix.savedList)
 	// const [isSaved, setIsSaved] = useState(false)
-	// console.log(savedList)
+	// console.log(movie)
+
+	
+	// const hours = Math.floor(runtime / 60)
+	// const mins = runtime % 60
+
+	// const UsRating = releaseDates.filter(function (item) {
+	// 	return item.iso_3166_1 === 'US'
+	// })
+	// const rating = UsRating[0]?.release_dates[0]?.certification
+
+
   return (
     <div
 			className="listItem"
@@ -114,20 +124,22 @@ const ListItem = ({ index, movie, type }) => {
 							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
 
-						<div className="itemInfoTop">
+						{/* May add this info to item details page / modal opposed to showing on hover too many axios calls at once */}
+
+						{/* <div className="itemInfoTop"> */}
 							{/* {rating ? (
 								<span className="limit">{rating}</span>
 							) : (
 								<span className="limit">NR</span>
 							)} */}
-              <span className="limit">NR</span>
+              {/* <span className="limit">NR</span> */}
 
 							{/* <span className="time">
 								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
 							</span> */}
 
-							<span className="limit">4K</span>
-						</div>
+							{/* <span className="limit">4K</span> */}
+						{/* </div> */}
 
 						<div className="genre">
 							{movie.genres.map((name) => (

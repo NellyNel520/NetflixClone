@@ -3,9 +3,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
 	getGenres,
-	fetchMovies,
-	getExtraMovieInfo,
-	getFeaturedLogo,
+	fetchMovies
 } from '../../store'
 // components
 import Navbar from '../../components/navbar/Navbar'
