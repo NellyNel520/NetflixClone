@@ -5,7 +5,7 @@ import {
 	current,
 } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { API_KEY, TMDB_BASE_URL } from '../utils/constants'
+import { API_KEY, TMDB_BASE_URL, MONGO_DB_BASE_URL } from '../utils/constants'
 
 const initialState = {
 	genres: [],
@@ -110,6 +110,39 @@ export const fetchShows = createAsyncThunk(
 )
 
 
+export const getAllUsers = createAsyncThunk('netflix/users', async () => {
+	const {
+		data: { users },
+	} = await axios.get(`${MONGO_DB_BASE_URL}/user/all-users`)
+	return users
+})
+
+export const getSavedList = createAsyncThunk(
+	'netflix/saved-list',
+	async ({ users, email }) => {
+		let user = users.find((o) => o.email === email)
+		let id = user._id
+		const {
+			data: { savedList },
+		} = await axios.get(`${MONGO_DB_BASE_URL}/user/savedList/${id}`)
+		return savedList
+	}
+)
+
+export const removeMovieFromLiked = createAsyncThunk(
+	'netflix/deleteLiked',
+	async ({ movieId, email }) => {
+		const {
+			data: { savedList },
+		} = await axios.put(`${MONGO_DB_BASE_URL}/user/remove`, {
+			email,
+			movieId,
+		})
+		return savedList
+	}
+)
+
+
 
 // function getExtraMovieInfo (movie state) w/ movie array
 
@@ -120,7 +153,7 @@ const NetflixSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getGenres.fulfilled, (state, action) => {
 			state.genres = action.payload
-			state.genresLoaded = true
+			// state.genresLoaded = true
 		})
 		builder.addCase(fetchMovies.fulfilled, (state, action) => {
 			state.movies = action.payload
@@ -134,6 +167,21 @@ const NetflixSlice = createSlice({
 		builder.addCase(fetchShowsByGenre.fulfilled, (state, action) => {
 			state.shows = action.payload
 		})
+		builder.addCase(getAllUsers.fulfilled, (state, action) => {
+			state.users = action.payload
+			state.usersLoaded = true
+		})
+		builder.addCase(getSavedList.fulfilled, (state, action) => {
+			state.savedList = action.payload
+		})
+		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
+			// state.savedList = action.payload
+			state.savedList.splice(
+				state.savedList.findIndex((item) => item.id === action.payload),
+				1
+			)
+		})
+		
 	},
 })
 

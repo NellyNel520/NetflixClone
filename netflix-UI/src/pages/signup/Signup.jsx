@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
-// import { registerUser } from '../../context/apiCalls'
+import { registerUser } from '../../context/apiCalls'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
@@ -30,10 +30,10 @@ const Signup = () => {
 	const handleFinish = async (email, password, username) => {
 		try {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password)
-			// await registerUser({
-			// 	username,
-			// 	email,
-			// })
+			await registerUser({
+				username,
+				email,
+			})
 		} catch (error) {
 			console.log(error)
 			// Alert.alert('Opps ...', error.message)
