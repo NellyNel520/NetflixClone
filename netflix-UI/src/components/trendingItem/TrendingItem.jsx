@@ -18,7 +18,7 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 
-const TrendingItem = ({ index, item }) => {
+const TrendingItem = ({ index, item, type }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [videoId, setVideoId] = useState('')
 	const { currentUser } = useContext(AuthContext)
@@ -31,16 +31,34 @@ const TrendingItem = ({ index, item }) => {
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			await movieTrailer(item.name, {
-				id: true,
-				multi: true,
+			if(type === 'movie') {
+				await movieTrailer(item.name, {
+					id: true,
+					multi: true,
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			} else {
+				await movieTrailer(item.name, {
+					id: true,
+					videoType: 'tv',
+					multi: true,
+
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			}
+
+
 			
-			})
-				.then((response) =>
-					// console.log(response, 'herrrreeeee')
-					setVideoId(response[1])
-				)
-				.catch((err) => console.log(err))
 		}
 
 		getMovieTrailer()

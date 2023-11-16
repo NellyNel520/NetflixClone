@@ -5,7 +5,7 @@ import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutl
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import TrendingItem from '../trendingItem/TrendingItem'
 
-const TrendingList = ({ data, title }) => {
+const TrendingList = ({ data, title, type }) => {
   const [isMoved, setIsMoved] = useState(false)
 	const [slideNumber, setSliderNumber] = useState(0)
 	const listRef = useRef()
@@ -35,7 +35,7 @@ const TrendingList = ({ data, title }) => {
 				/>
 				<div className="container" ref={listRef}>
 					{data.map((item, i) => (
-						<TrendingItem index={i} item={item} key={item.id} />
+						<TrendingItem index={i} item={item} key={item.id} type={type}/>
 					))}
 				</div>
 

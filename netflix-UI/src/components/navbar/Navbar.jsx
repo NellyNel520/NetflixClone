@@ -36,9 +36,9 @@ const Navbar = () => {
 					<Link to={'/series'} className="link">
 						<span>TV Shows</span>
 					</Link>
-					{/* <Link to={'/new'} className="link"> */}
+					<Link to={'/new'} className="link">
 						<span>New & Popular</span>
-					{/* </Link> */}
+					</Link>
 					{/* <Link to={'/myList'} className="link"> */}
 						<span>My List</span>
 					{/* </Link> */}
