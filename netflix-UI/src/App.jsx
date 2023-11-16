@@ -7,6 +7,7 @@ import Movies from './pages/movies/Movies'
 import Shows from './pages/shows/Shows'
 import NewAndPopular from './pages/newAndPopular/NewAndPopular'
 import Watch from './pages/watch/Watch'
+import MyList from './pages/myList/MyList'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -50,6 +51,11 @@ function App() {
 					exact
 					path="/watch"
 					element={currentUser ? <Watch /> : <Navigate to={'/'} />}
+				/>
+				<Route
+					exact
+					path="/myList"
+					element={currentUser ? <MyList /> : <Navigate to={'/'} />}
 				/>
 			</Routes>
 		</BrowserRouter>

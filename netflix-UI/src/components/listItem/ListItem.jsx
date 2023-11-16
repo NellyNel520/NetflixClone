@@ -99,11 +99,11 @@ const ListItem = ({ index, movie, type }) => {
 						<img
 							src={`${BASE_URL}/${movie.image}`}
 							alt="movie cover"
-							// onClick={() =>
-							// 	navigate('/watch', {
-							// 		state: { videoId: videoId, movie: movie },
-							// 	})
-							// }
+							onClick={() =>
+								navigate('/watch', {
+									state: { videoId: videoId, movie: movie },
+								})
+							}
 						/>
 					)}
 			

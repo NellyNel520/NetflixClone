@@ -39,9 +39,9 @@ const Navbar = () => {
 					<Link to={'/new'} className="link">
 						<span>New & Popular</span>
 					</Link>
-					{/* <Link to={'/myList'} className="link"> */}
+					<Link to={'/myList'} className="link">
 						<span>My List</span>
-					{/* </Link> */}
+					</Link>
 				</div>
 				<div className="right">
 					<div className={`search ${showSearch ? 'show-search' : ''}`}>
