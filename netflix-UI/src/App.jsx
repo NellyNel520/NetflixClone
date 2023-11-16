@@ -6,6 +6,7 @@ import Home from './pages/home/Home'
 import Movies from './pages/movies/Movies'
 import Shows from './pages/shows/Shows'
 import NewAndPopular from './pages/newAndPopular/NewAndPopular'
+import Watch from './pages/watch/Watch'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -40,8 +41,16 @@ function App() {
 					path="/series"
 					element={currentUser ? <Shows /> : <Navigate to={'/'} />}
 				/>
-				<Route exact path="/new" element={currentUser ? <NewAndPopular /> : <Navigate to={'/'} />}/>
-
+				<Route
+					exact
+					path="/new"
+					element={currentUser ? <NewAndPopular /> : <Navigate to={'/'} />}
+				/>
+				<Route
+					exact
+					path="/watch"
+					element={currentUser ? <Watch /> : <Navigate to={'/'} />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	)
