@@ -40,16 +40,34 @@ const ListItem = ({ index, movie, type }) => {
 	// const rating = UsRating[0]?.release_dates[0]?.certification
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			await movieTrailer(movie.name, {
-				id: true,
-				multi: true,
+			if(type === 'movie') {
+				await movieTrailer(movie.name, {
+					id: true,
+					multi: true,
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			} else {
+				await movieTrailer(movie.name, {
+					id: true,
+					videoType: 'tv',
+					multi: true,
+
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			}
+
+
 			
-			})
-				.then((response) =>
-					// console.log(response, 'herrrreeeee')
-					setVideoId(response[1])
-				)
-				.catch((err) => console.log(err))
 		}
 
 		getMovieTrailer()

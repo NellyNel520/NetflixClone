@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import SelectGenre from '../selectGenre/SelectGenre'
-
+import movieTrailer from 'movie-trailer'
+import YouTube from 'react-youtube'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -16,8 +18,9 @@ const Featured = ({ type, genres, itemList, i }) => {
 	const image = itemList[i]?.image
 	const details = itemList[i]?.overview
 	const detailsLength = itemList[i]?.overview.length
-
+	const [videoId, setVideoId] = useState('')
   const [itemLogo, setItemLogo] = useState({})
+	const navigate = useNavigate()
 
   useEffect(() => {
 		if (type) {
@@ -49,6 +52,41 @@ const Featured = ({ type, genres, itemList, i }) => {
 		}
 	})
 
+	useEffect(() => {
+		const getMovieTrailer = async () => {
+			if(type === 'movie') {
+				await movieTrailer(title, {
+					id: true,
+					multi: true,
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			} else {
+				await movieTrailer(title, {
+					id: true,
+					videoType: 'tv',
+					multi: true,
+
+				
+				})
+					.then((response) =>
+						// console.log(response, 'herrrreeeee')
+						setVideoId(response[1])
+					)
+					.catch((err) => console.log(err))
+			}
+
+
+			
+		}
+
+		getMovieTrailer()
+	}, [title, type])
+
 
   return (
   <div className="featured">
@@ -71,11 +109,11 @@ const Featured = ({ type, genres, itemList, i }) => {
 				<div className="buttons">
 					<button
 						className="play"
-						// onClick={() =>
-						// 	navigate('/watch', {
-						// 		state: { videoId: videoId },
-						// 	})
-						// }
+						onClick={() =>
+							navigate('/watch', {
+								state: { videoId: videoId },
+							})
+						}
 					>
 						<PlayArrowIcon />
 						<span>Play</span>
