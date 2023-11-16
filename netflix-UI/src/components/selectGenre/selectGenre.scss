@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  
+  
+  .category { 
+    position: absolute;
+    top: 80px;
+    left: 50px;
+    font-size: 35px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+  
+    select {
+      cursor: pointer;
+      background-color: var(--main-color);
+      border: 1px solid white;
+      color: white;
+      margin-left: 20px;
+      padding: 5px;
+    }
+  }
+  }

@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import './featured.scss'
 import React, { useState, useEffect } from 'react'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import SelectGenre from '../selectGenre/SelectGenre'
 
 import axios from 'axios'
 
@@ -50,9 +52,9 @@ const Featured = ({ type, genres, itemList, i }) => {
 
   return (
   <div className="featured">
-			{/* {type === 'movie' && <SelectGenre type={type} genres={genres} />} */}
+			{type === 'movie' && <SelectGenre type={type} genres={genres} />}
 
-			{/* {type === 'tv' && <SelectGenreShows type={type} genres={genres} />} */}
+			{type === 'tv' && <SelectGenre type={type} genres={genres} />}
 
       {/* <img src='https://wallpapers.com/images/hd/vivo-movie-desktop-poster-yxw247ste4wik43s.jpg' alt="movie"  /> */}
 			<img src={`${BASE_URL}/${image}`} alt="movie" />

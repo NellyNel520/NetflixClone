@@ -11,7 +11,9 @@ const initialState = {
 	genres: [],
 	genresLoaded: false,
 	movies: [],
-	shows: []
+	shows: [],
+	users: [],
+	savedList: [],
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -53,6 +55,32 @@ const getRawData = async (api, genres, paging = false) => {
 	return moviesArray
 }
 
+export const fetchMoviesByGenre = createAsyncThunk(
+	'netflix/moviesByGenre',
+	async ({ genre, type }, thunkAPI) => {
+		const {
+			netflix: { genres },
+		} = thunkAPI.getState()
+		return getRawData(
+			`${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
+			genres
+		)
+	}
+)
+
+export const fetchShowsByGenre = createAsyncThunk(
+	'netflix/showsByGenre',
+	async ({ genre, type }, thunkAPI) => {
+		const {
+			netflix: { genres },
+		} = thunkAPI.getState()
+		return getRawData(
+			`${TMDB_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
+			genres
+		)
+	}
+)
+
 export const fetchMovies = createAsyncThunk(
 	'netflix/trendingMovies',
 	async ({ type }, thunkAPI) => {
@@ -81,6 +109,8 @@ export const fetchShows = createAsyncThunk(
 	}
 )
 
+
+
 // function getExtraMovieInfo (movie state) w/ movie array
 
 
@@ -98,7 +128,12 @@ const NetflixSlice = createSlice({
 		builder.addCase(fetchShows.fulfilled, (state, action) => {
 			state.shows = action.payload
 		})
-		
+		builder.addCase(fetchMoviesByGenre.fulfilled, (state, action) => {
+			state.movies = action.payload
+		})
+		builder.addCase(fetchShowsByGenre.fulfilled, (state, action) => {
+			state.shows = action.payload
+		})
 	},
 })
 
