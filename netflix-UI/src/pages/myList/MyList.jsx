@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 // import { getSavedList, getAllUsers } from '../../store'
 import Navbar from '../../components/navbar/Navbar'
-// import Card from '../../components/card/Card' 
+import Card from '../../components/card/Card'
 
 const MyList = () => {
   const { currentUser } = useContext(AuthContext)
