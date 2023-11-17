@@ -109,13 +109,25 @@ export const fetchShows = createAsyncThunk(
 	}
 )
 
-
 export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 	const {
 		data: { users },
 	} = await axios.get(`${MONGO_DB_BASE_URL}/user/all-users`)
 	return users
 })
+// export const fetchShows = createAsyncThunk(
+// 	'netflix/trendingShows',
+// 	async ({ type }, thunkAPI) => {
+// 		const {
+// 			netflix: { genres },
+// 		} = thunkAPI.getState()
+// 		return getRawData(
+// 			`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
+// 			genres,
+// 			true
+// 		)
+// 	}
+// )
 
 export const getSavedList = createAsyncThunk(
 	'netflix/saved-list',
@@ -127,7 +139,7 @@ export const getSavedList = createAsyncThunk(
 		} = await axios.get(`${MONGO_DB_BASE_URL}/user/savedList/${id}`)
 		return savedList
 	}
-)
+) 
 
 export const removeMovieFromLiked = createAsyncThunk(
 	'netflix/deleteLiked',
@@ -142,10 +154,20 @@ export const removeMovieFromLiked = createAsyncThunk(
 	}
 )
 
-
+export const removeMovieFromSavedScreen = createAsyncThunk(
+	'netflix/deleteSaved',
+	async ({ email, movieId }) => {
+		const {
+			data: { savedList },
+		} = await axios.put(`${MONGO_DB_BASE_URL}/user/remove`, {
+			email,
+			movieId,
+		})
+		return savedList
+	}
+)
 
 // function getExtraMovieInfo (movie state) w/ movie array
-
 
 const NetflixSlice = createSlice({
 	name: 'Netflix',
@@ -181,7 +203,6 @@ const NetflixSlice = createSlice({
 			// 	1
 			// )
 		})
-		
 	},
 })
 

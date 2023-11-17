@@ -26,7 +26,7 @@ const Card = ({ index, movie, genres, type }) => {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const savedList = useSelector((state) => state.netflix.savedList)
-	const [isSaved, setIsSaved] = useState(false)
+	// const [isSaved, setIsSaved] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -56,33 +56,21 @@ const Card = ({ index, movie, genres, type }) => {
 			}
 		}
 
-		const isItemSaved = () => {
-			try {
-				let saved = savedList.find((o) => o.id === movie.id)
-				if (saved) {
-					setIsSaved(true)
-				}
-			} catch (error) {
-				console.log(error)
-			}
-		}
+		// const isItemSaved = () => {
+		// 	try {
+		// 		let saved = savedList.find((o) => o.id === movie.id)
+		// 		if (saved) {
+		// 			setIsSaved(true)
+		// 		}
+		// 	} catch (error) {
+		// 		console.log(error)
+		// 	}
+		// }
 
 		getMovieTrailer()
-		isItemSaved()
+		// isItemSaved()
 	}, [movie, type, savedList])
 
-	const addToList = async () => {
-		try {
-			await axios
-				.post(`${MONGO_DB_BASE_URL}/user/add`, {
-					email,
-					data: movie,
-				})
-				.then(() => setIsSaved(true))
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
 	const removeFromList = async () => {
 		try {
@@ -133,7 +121,7 @@ const Card = ({ index, movie, genres, type }) => {
 
 								{/* ******************* on click add to my list mongo db *****************/}
 
-								{isSaved ? (
+								{/* {isSaved ? (
 									<CheckIcon
 										className="icon"
 										title="Already saved"
@@ -145,7 +133,13 @@ const Card = ({ index, movie, genres, type }) => {
 										title="Add to my list"
 										onClick={addToList}
 									/>
-								)}
+								)} */}
+
+								<CheckIcon
+										className="icon"
+										title="Already saved"
+										onClick={removeFromList}
+									/>
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>

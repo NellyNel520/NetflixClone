@@ -20,7 +20,7 @@ const MyList = () => {
 	useEffect(() => { 
 		dispatch(getAllUsers())
 		dispatch(getSavedList({ users, email }))
-	}, [email])
+	}, [])
 
 	// console.log(savedList)
   return (
