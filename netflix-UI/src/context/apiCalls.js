@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import { MONGO_DB_BASE_URL } from '../utils/constants'
 
@@ -5,7 +6,11 @@ import { MONGO_DB_BASE_URL } from '../utils/constants'
 
 export const registerUser = async (data) => {
 	
-		const res = await axios.post(`${MONGO_DB_BASE_URL}/user/register`, data)
+	// try {
+		const res = await axios.post(`http://localhost:3001/api/user/register`, data)
 		return res.data
+	// } catch (error) {
+	// 	throw error
+	// }
 
-}
+} 

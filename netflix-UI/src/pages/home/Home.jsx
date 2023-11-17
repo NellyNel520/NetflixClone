@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
 	getGenres,
 	fetchMovies,
-	fetchShows
+	fetchShows,
+	getAllUsers,
+	getSavedList,
 } from '../../store'
 // components
 import Navbar from '../../components/navbar/Navbar'
@@ -15,6 +17,7 @@ const Home = () => {
 	const genres = useSelector((state) => state.netflix.genres)
 	const movies = useSelector((state) => state.netflix.movies)
 	const shows = useSelector((state) => state.netflix.shows)
+	const users = useSelector((state) => state.netflix.users)
 	// const logo = useSelector((state) => state.netflix.logo)
 	// const [featuredLogo, setFeaturedLogo] = useState({})
 
@@ -22,9 +25,10 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(getGenres())
+		dispatch(getAllUsers())
 	}, [])
 
-	// console.log(genres)
+	console.log(users)
 
 	useEffect(() => {
 		// if (genresLoaded) {
