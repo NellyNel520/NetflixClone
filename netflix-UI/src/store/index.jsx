@@ -131,7 +131,7 @@ export const getSavedList = createAsyncThunk(
 
 export const removeMovieFromLiked = createAsyncThunk(
 	'netflix/deleteLiked',
-	async ({ movieId, email }) => {
+	async ({ email, movieId }) => {
 		const {
 			data: { savedList },
 		} = await axios.put(`${MONGO_DB_BASE_URL}/user/remove`, {
@@ -175,11 +175,11 @@ const NetflixSlice = createSlice({
 			state.savedList = action.payload
 		})
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-			// state.savedList = action.payload
-			state.savedList.splice(
-				state.savedList.findIndex((item) => item.id === action.payload),
-				1
-			)
+			state.savedList = action.payload
+			// state.savedList.splice(
+			// 	state.savedList.findIndex((item) => item.id === action.payload),
+			// 	1
+			// )
 		})
 		
 	},

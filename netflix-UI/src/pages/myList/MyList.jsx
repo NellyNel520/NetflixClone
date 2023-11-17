@@ -8,7 +8,7 @@ import { getSavedList, getAllUsers } from '../../store'
 import Navbar from '../../components/navbar/Navbar'
 import Card from '../../components/card/Card'
 
-const MyList = () => {
+const MyList = () => { 
   const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const users = useSelector((state) => state.netflix.users)
@@ -20,7 +20,7 @@ const MyList = () => {
 	useEffect(() => { 
 		dispatch(getAllUsers())
 		dispatch(getSavedList({ users, email }))
-	}, [])
+	}, [dispatch, users, email])
 
 	// console.log(savedList)
   return (

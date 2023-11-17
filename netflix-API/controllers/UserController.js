@@ -83,6 +83,31 @@ const addToLikedMovies =  async (req, res) => {
 };
 
 // REMOVE TO USER LIST 
+// const removeFromLikedMovies = async (req, res) => {
+//   try {
+//     const { email, movieId } = req.body;
+//     const user = await User.findOne({ email });
+//     if (user) {
+//       const movies = user.likedMovies;
+//       const movieIndex = movies.findIndex(({ id }) => id === movieId);
+//       if (!movieIndex) {
+//         res.status(400).send({ msg: "Movie not found." });
+//       }
+//       movies.splice(movieIndex, 1);
+//       await User.findByIdAndUpdate(
+//         user._id, 
+//         {
+//           likedMovies: movies,
+//         },
+//         { new: true }
+//       );
+//       return res.json({ msg: "Movie successfully removed.", movies });
+//     } else return res.json({ msg: "User with given email not found." });
+//   } catch (error) {
+//     return res.json({ msg: "Error removing movie from the liked list" });
+//   }
+// };
+
 const removeFromLikedMovies = async (req, res) => {
   try {
     const { email, movieId } = req.body;
@@ -90,23 +115,23 @@ const removeFromLikedMovies = async (req, res) => {
     if (user) {
       const movies = user.likedMovies;
       const movieIndex = movies.findIndex(({ id }) => id === movieId);
-      if (!movieIndex) {
-        res.status(400).send({ msg: "Movie not found." });
-      }
-      movies.splice(movieIndex, 1);
-      await User.findByIdAndUpdate(
-        user._id, 
-        {
-          likedMovies: movies,
-        },
-        { new: true }
-      );
+      if (movieIndex) {
+        movies.splice(movieIndex, 1);
+        await User.findByIdAndUpdate(
+          user._id, 
+          {
+            likedMovies: movies,
+          },
+          { new: true }
+          );
+        } else return res.status(400).send({ msg: "Movie not found." });
       return res.json({ msg: "Movie successfully removed.", movies });
     } else return res.json({ msg: "User with given email not found." });
   } catch (error) {
-    return res.json({ msg: "Error removing movie to the liked list" });
+    return res.json({ msg: "Error removing movie from the liked list" });
   }
 };
+
 
 
 

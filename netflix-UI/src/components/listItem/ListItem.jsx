@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { removeMovieFromLiked } from '../../store'
 import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
@@ -27,6 +28,7 @@ const ListItem = ({ index, movie, type }) => {
 	const [isSaved, setIsSaved] = useState(false)
 
 	const dispatch = useDispatch()
+	
 
 
 	// const [isSaved, setIsSaved] = useState(false)
@@ -66,13 +68,27 @@ const ListItem = ({ index, movie, type }) => {
 					)
 					.catch((err) => console.log(err))
 			}
+		
 
 
 			
 		}
 
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === movie.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 		getMovieTrailer()
-	}, [movie, type])
+		isItemSaved()
+	}, [movie, type, savedList])
 
 	const addToList = async () => {
 		try {
@@ -85,6 +101,16 @@ const ListItem = ({ index, movie, type }) => {
 		} catch (error) {
 			console.log(error)
 		}
+	}
+
+	const removeFromList = async () => {
+		try {
+			await dispatch(removeMovieFromLiked({ email, movieId: movie.id}))
+			// setIsSaved(false)
+			
+		} catch (error) {
+			console.log(error)
+		} 
 	}
 
 	return (
@@ -136,12 +162,12 @@ const ListItem = ({ index, movie, type }) => {
 								/>
 
 								{/* ******************* on click add to my list mongo db *****************/}
-
+ 
 								{isSaved ? (
 									<CheckIcon
 										className="icon"
 										title="Already saved"
-										// onClick={removeFromList}
+										onClick={removeFromList}
 									/>
 								) : (
 									<AddIcon
