@@ -1,7 +1,7 @@
 import './myList.scss'
 import React, { useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext } from 'react' 
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { getSavedList, getAllUsers } from '../../store'
@@ -20,7 +20,7 @@ const MyList = () => {
 	useEffect(() => { 
 		dispatch(getAllUsers())
 		dispatch(getSavedList({ users, email }))
-	}, [dispatch, users, email])
+	}, [email])
 
 	// console.log(savedList)
   return (

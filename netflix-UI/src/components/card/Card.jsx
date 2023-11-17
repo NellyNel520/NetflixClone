@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import './card.scss'
 import React, { useState, useEffect } from 'react'
@@ -8,33 +9,33 @@ import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
-// import { removeMovieFromLiked } from '../../store'
+import { removeMovieFromLiked } from '../../store'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
-// import { MONGO_DB_BASE_URL } from '../../utils/constants'
 
-const Card = ({ index, movie, genres, type}) => {
-  const [isHovered, setIsHovered] = useState(false)
+const Card = ({ index, movie, genres, type }) => {
+	const [isHovered, setIsHovered] = useState(false)
 	const [videoId, setVideoId] = useState('')
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	const dispatch = useDispatch()
-	// const savedList = useSelector((state) => state.netflix.savedList)
-	// const [isSaved, setIsSaved] = useState(false)
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
 
-  useEffect(() => {
+	const dispatch = useDispatch()
+
+	useEffect(() => {
 		const getMovieTrailer = async () => {
-			if(type === 'movie') {
+			if (type === 'movie') {
 				await movieTrailer(movie.name, {
 					id: true,
 					multi: true,
-				
 				})
 					.then((response) =>
 						// console.log(response, 'herrrreeeee')
@@ -46,8 +47,6 @@ const Card = ({ index, movie, genres, type}) => {
 					id: true,
 					videoType: 'tv',
 					multi: true,
-
-				
 				})
 					.then((response) =>
 						// console.log(response, 'herrrreeeee')
@@ -55,16 +54,48 @@ const Card = ({ index, movie, genres, type}) => {
 					)
 					.catch((err) => console.log(err))
 			}
+		}
 
-
-			
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === movie.id)
+				if (saved) {
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
 		}
 
 		getMovieTrailer()
-	}, [movie, type])
-  return (
-   <div
+		isItemSaved()
+	}, [movie, type, savedList])
+
+	const addToList = async () => {
+		try {
+			await axios
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
+					email,
+					data: movie,
+				})
+				.then(() => setIsSaved(true))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const removeFromList = async () => {
+		try {
+			dispatch(removeMovieFromLiked({ email, movieId: movie.id }))
+			setIsSaved(false)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	return (
+		<div
 			className="card"
+			// style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
@@ -102,7 +133,7 @@ const Card = ({ index, movie, genres, type}) => {
 
 								{/* ******************* on click add to my list mongo db *****************/}
 
-								{/* {isSaved ? (
+								{isSaved ? (
 									<CheckIcon
 										className="icon"
 										title="Already saved"
@@ -114,12 +145,7 @@ const Card = ({ index, movie, genres, type}) => {
 										title="Add to my list"
 										onClick={addToList}
 									/>
-								)} */}
-                <CheckIcon
-										className="icon"
-										title="Already saved"
-										// onClick={removeFromList}
-									/>
+								)}
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
@@ -149,7 +175,7 @@ const Card = ({ index, movie, genres, type}) => {
 				</>
 			)}
 		</div>
-  )
+	)
 }
 
 export default Card

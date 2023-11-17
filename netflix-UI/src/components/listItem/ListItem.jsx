@@ -28,8 +28,6 @@ const ListItem = ({ index, movie, type }) => {
 	const [isSaved, setIsSaved] = useState(false)
 
 	const dispatch = useDispatch()
-	
-
 
 	// const [isSaved, setIsSaved] = useState(false)
 	// console.log(movie)
@@ -43,11 +41,10 @@ const ListItem = ({ index, movie, type }) => {
 	// const rating = UsRating[0]?.release_dates[0]?.certification
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			if(type === 'movie') {
+			if (type === 'movie') {
 				await movieTrailer(movie.name, {
 					id: true,
 					multi: true,
-				
 				})
 					.then((response) =>
 						// console.log(response, 'herrrreeeee')
@@ -59,8 +56,6 @@ const ListItem = ({ index, movie, type }) => {
 					id: true,
 					videoType: 'tv',
 					multi: true,
-
-				
 				})
 					.then((response) =>
 						// console.log(response, 'herrrreeeee')
@@ -68,17 +63,12 @@ const ListItem = ({ index, movie, type }) => {
 					)
 					.catch((err) => console.log(err))
 			}
-		
-
-
-			
 		}
 
 		const isItemSaved = () => {
 			try {
 				let saved = savedList.find((o) => o.id === movie.id)
 				if (saved) {
-					// setIsLiked(true)
 					setIsSaved(true)
 				}
 			} catch (error) {
@@ -105,12 +95,11 @@ const ListItem = ({ index, movie, type }) => {
 
 	const removeFromList = async () => {
 		try {
-			await dispatch(removeMovieFromLiked({ email, movieId: movie.id}))
+			dispatch(removeMovieFromLiked({ email, movieId: movie.id }))
 			setIsSaved(false)
-			
 		} catch (error) {
 			console.log(error)
-		} 
+		}
 	}
 
 	return (
@@ -146,7 +135,7 @@ const ListItem = ({ index, movie, type }) => {
 							}
 						/>
 					)}
-			
+
 					<div className="itemInfo">
 						<p>{movie.name}</p>
 
@@ -162,7 +151,7 @@ const ListItem = ({ index, movie, type }) => {
 								/>
 
 								{/* ******************* on click add to my list mongo db *****************/}
- 
+
 								{isSaved ? (
 									<CheckIcon
 										className="icon"
@@ -176,8 +165,6 @@ const ListItem = ({ index, movie, type }) => {
 										onClick={addToList}
 									/>
 								)}
-
-							
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
