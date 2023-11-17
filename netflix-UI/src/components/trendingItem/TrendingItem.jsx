@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
-// import { removeMovieFromLiked } from '../../store'
-// import { MONGO_DB_BASE_URL } from '../../utils/constants'
+import { removeMovieFromLiked } from '../../store'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
@@ -26,8 +26,8 @@ const TrendingItem = ({ index, item, type }) => {
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	// const savedList = useSelector((state) => state.netflix.savedList)
-	// const [isSaved, setIsSaved] = useState(false)
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {
@@ -61,8 +61,44 @@ const TrendingItem = ({ index, item, type }) => {
 			
 		}
 
+		const isItemSaved = () => {
+			try {
+				let saved = savedList.find((o) => o.id === item.id)
+				if (saved) {
+					// setIsLiked(true)
+					setIsSaved(true)
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 		getMovieTrailer()
-	}, [item])
+		isItemSaved()
+	}, [item, savedList, type])
+
+	const addToList = async () => {
+		try {
+			await axios
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
+					email,
+					data: item,
+				})
+				.then(() => setIsSaved(true))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const removeFromList = async () => {
+		try {
+			await dispatch(removeMovieFromLiked({ email, movieId: item.id}))
+			setIsSaved(false)
+			
+		} catch (error) {
+			console.log(error)
+		} 
+	}
 	return (
 		<div
 			className="trendingListItem"
@@ -108,7 +144,7 @@ const TrendingItem = ({ index, item, type }) => {
 									}
 								/>
 
-								{/* {isSaved ? (
+								{isSaved ? (
 									<CheckIcon
 										className="icon"
 										title="Already saved"
@@ -120,12 +156,8 @@ const TrendingItem = ({ index, item, type }) => {
 										title="Add to my list"
 										onClick={addToList}
 									/>
-								)} */}
-                <AddIcon
-										className="icon"
-										title="Add to my list"
-										// onClick={addToList}
-									/>
+								)}
+               
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>

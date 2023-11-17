@@ -106,7 +106,7 @@ const ListItem = ({ index, movie, type }) => {
 	const removeFromList = async () => {
 		try {
 			await dispatch(removeMovieFromLiked({ email, movieId: movie.id}))
-			// setIsSaved(false)
+			setIsSaved(false)
 			
 		} catch (error) {
 			console.log(error)
