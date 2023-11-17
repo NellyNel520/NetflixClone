@@ -4,23 +4,23 @@ import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
-// import { getSavedList, getAllUsers } from '../../store'
+import { getSavedList, getAllUsers } from '../../store'
 import Navbar from '../../components/navbar/Navbar'
 import Card from '../../components/card/Card'
 
 const MyList = () => {
   const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	// const users = useSelector((state) => state.netflix.users)
-	// const savedList = useSelector((state) => state.netflix.savedList)
+	const users = useSelector((state) => state.netflix.users)
+	const savedList = useSelector((state) => state.netflix.savedList)
 
 	// const navigate = useNavigate()
 	const dispatch = useDispatch()
 
-	// useEffect(() => { 
-	// 	dispatch(getAllUsers())
-	// 	dispatch(getSavedList({ users, email }))
-	// }, [])
+	useEffect(() => { 
+		dispatch(getAllUsers())
+		dispatch(getSavedList({ users, email }))
+	}, [])
 
 	// console.log(savedList)
   return (
@@ -32,7 +32,7 @@ const MyList = () => {
         <span>My List</span>
       </div>
       <div className="grid-cont">
-        {/* {savedList.length > 0 ? (
+        {savedList.length > 0 ? (
           <div className="grid">
             {savedList.map((movie, i) => {
               return <Card index={i} movie={movie} key={movie.id} />
@@ -42,7 +42,7 @@ const MyList = () => {
           <div className="no-movies">
             <p>You haven't added any titles to your list yet.</p>
           </div>
-        )} */}
+        )}
       </div>
     </div>
   </div>

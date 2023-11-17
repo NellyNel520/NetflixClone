@@ -1,6 +1,8 @@
 import './home.scss'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import {
 	getGenres,
 	fetchMovies,
@@ -18,6 +20,9 @@ const Home = () => {
 	const movies = useSelector((state) => state.netflix.movies)
 	const shows = useSelector((state) => state.netflix.shows)
 	const users = useSelector((state) => state.netflix.users)
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const { currentUser } = useContext(AuthContext)
+	const email = currentUser.email
 	// const logo = useSelector((state) => state.netflix.logo)
 	// const [featuredLogo, setFeaturedLogo] = useState({})
 
@@ -28,19 +33,19 @@ const Home = () => {
 		dispatch(getAllUsers())
 	}, [])
 
-	console.log(users)
+	// console.log(users)
 
 	useEffect(() => {
 		// if (genresLoaded) {
 		dispatch(fetchMovies({ genres, type: 'movie' }))
 		dispatch(fetchShows({ genres, type: 'tv' }))
-		// dispatch(getHomeLogo())
+		dispatch(getSavedList({ users, email }))
 		// }
 	}, [genres, dispatch])
 
 	// const featured = movies[4].id
 
-	// console.log(featured)
+	console.log(savedList)
 
 	// useEffect(() => (
 	//   dispatch(getFeaturedLogo({ type: 'movie', featured }))

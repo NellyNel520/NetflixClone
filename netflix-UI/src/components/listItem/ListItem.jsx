@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import AddIcon from '@mui/icons-material/Add'
@@ -21,13 +22,13 @@ const ListItem = ({ index, movie, type }) => {
 	const navigate = useNavigate()
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-
 	const [videoId, setVideoId] = useState('')
-	// const [runtime, setRuntime] = useState('')
-	// const [releaseDates, setReleaseDates] = useState([])
+	const savedList = useSelector((state) => state.netflix.savedList)
+	const [isSaved, setIsSaved] = useState(false)
 
-	// const dispatch = useDispatch()
-	// const savedList = useSelector((state) => state.netflix.savedList)
+	const dispatch = useDispatch()
+
+
 	// const [isSaved, setIsSaved] = useState(false)
 	// console.log(movie)
 
@@ -72,6 +73,19 @@ const ListItem = ({ index, movie, type }) => {
 
 		getMovieTrailer()
 	}, [movie, type])
+
+	const addToList = async () => {
+		try {
+			await axios
+				.post(`${MONGO_DB_BASE_URL}/user/add`, {
+					email,
+					data: movie,
+				})
+				.then(() => setIsSaved(true))
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	return (
 		<div
@@ -123,11 +137,11 @@ const ListItem = ({ index, movie, type }) => {
 
 								{/* ******************* on click add to my list mongo db *****************/}
 
-								{/* {isSaved ? (
+								{isSaved ? (
 									<CheckIcon
 										className="icon"
 										title="Already saved"
-										onClick={removeFromList}
+										// onClick={removeFromList}
 									/>
 								) : (
 									<AddIcon
@@ -135,13 +149,9 @@ const ListItem = ({ index, movie, type }) => {
 										title="Add to my list"
 										onClick={addToList}
 									/>
-								)} */}
+								)}
 
-								<CheckIcon
-									className="icon"
-									title="Already saved"
-									// onClick={removeFromList}
-								/>
+							
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>

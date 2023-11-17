@@ -6,8 +6,6 @@ import { registerUser } from '../../context/apiCalls'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
-import { MONGO_DB_BASE_URL } from '../../utils/constants'
-import axios from 'axios'
 import './signup.scss'
 
 const signupFormSchema = Yup.object().shape({
@@ -29,9 +27,7 @@ const Signup = () => {
 		setEmail(emailRef.current.value)
 	}
 
-	// const registerUser = async (username, email) => {
-	// 	await axios.post(`${MONGO_DB_BASE_URL}/user/register`, {username: username, email: email})
-	// }
+
 
 	const handleFinish = async (email, password, username) => {
 		try {
