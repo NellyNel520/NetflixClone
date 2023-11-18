@@ -19,11 +19,9 @@ const Home = () => {
 	const genres = useSelector((state) => state.netflix.genres)
 	const movies = useSelector((state) => state.netflix.movies)
 	const shows = useSelector((state) => state.netflix.shows)
-	const users = useSelector((state) => state.netflix.users)
-	const savedList = useSelector((state) => state.netflix.savedList)
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
-	// const logo = useSelector((state) => state.netflix.logo)
+	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
 	// const [featuredLogo, setFeaturedLogo] = useState({})
 
 	const dispatch = useDispatch()
@@ -33,32 +31,20 @@ const Home = () => {
 		dispatch(getAllUsers())
 	}, [])
 
-	// console.log(users)
+
 
 	useEffect(() => {
-		// if (genresLoaded) {
+		if (genresLoaded) {
 		dispatch(fetchMovies({ genres, type: 'movie' }))
 		dispatch(fetchShows({ genres, type: 'tv' }))
-		dispatch(getSavedList({ users, email }))
-		// }
+		dispatch(getSavedList({ email }))
+		}
+
 	}, [genres, dispatch])
 
-	// const featured = movies[4].id
 
-	console.log(savedList)
+	
 
-	// useEffect(() => (
-	//   dispatch(getFeaturedLogo({ type: 'movie', featured }))
-	// ))
-	// console.log(logo)
-
-	// useEffect(() => {
-	//   movies.forEach((movie) => {
-	//     dispatch(getExtraMovieInfo(movie.id))
-	//   })
-	// }, [movies, dispatch])
-
-	// console.log(movies)
 
 	return (
 		<div className="home">

@@ -4,14 +4,16 @@ import React, { useEffect } from 'react'
 import Featured from '../../components/featured/Featured'
 import MovieLists from '../../components/listContainer/MovieLists'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchMovies, getGenres} from '../../store'
+import { fetchMovies, getGenres, getSavedList, getAllUsers} from '../../store'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+
 
 const Movies = () => {
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
-  // const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const savedListLoaded = useSelector((state) => state.netflix.savedListLoaded);
   const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
   // const users = useSelector((state) => state.netflix.users)
@@ -19,16 +21,21 @@ const Movies = () => {
 	const dispatch = useDispatch()
   
 	useEffect(() => {
+
 		dispatch(getGenres()) 
-    // dispatch(getAllUsers()) 
+    dispatch(getAllUsers())
+    
+
 	}, [])
 
   useEffect(() => {
-   
+    if(genresLoaded) {
       dispatch(fetchMovies({ genres, type: "movie" })); 
-      // dispatch(getSavedList({users, email}))
-    
-  }, [dispatch, genres]);
+      dispatch(getSavedList({ email}))
+    }
+  
+
+  }, [dispatch, genres, genresLoaded, email]);
 
 
   return (

@@ -12,13 +12,21 @@ const MyList = () => {
   const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email 
 	const savedList = useSelector((state) => state.netflix.savedList)
-
+  const usersLoaded = useSelector((state) => state.netflix.usersLoaded)
 	// const navigate = useNavigate()
 	const dispatch = useDispatch()
 
-	useEffect(() => { 
-		dispatch(getSavedList({email }))
+  useEffect(() => {
+    dispatch(getAllUsers())
 	}, [])
+
+	useEffect(() => { 
+    if(usersLoaded) {
+		dispatch(getSavedList({email }))
+    }
+	}, [dispatch, usersLoaded, email])
+
+
 
 	// console.log(savedList)
   return (
