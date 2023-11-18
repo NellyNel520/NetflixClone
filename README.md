@@ -12,7 +12,7 @@
 
 This Netflix Clone application replicates the iconic Netflix experience and offers a feature-rich platform for users to explore, engage with, and personalize their favorite movies and TV shows. Powered by the MERN stack (MongoDB, Express, React, Node.js) and incorporating firebase authentication, TMDB API and redux-toolkit, this clone recreates the functionality and design of the original app. Providing a familiar, and seamless and immersive user experience.
 
-This project has been deployed and can be viewed [here](https://netflix-clone-ui-jl8h.onrender.com/)
+This project has been deployed and can be viewed [here](https://netfilx-ui.onrender.com/)
 ***
 
 #### ***Technologies Used*** 
@@ -59,7 +59,7 @@ Here's how you can get started with my Netflix Clone App:
 Now, you can explore, sign up, and sign in to begin enjoying the Netflix-like experience right from your browser.
 
 
-The project itself was deployed and can be viewed [here](https://netflix-clone-ui-jl8h.onrender.com/).
+The project itself was deployed and can be viewed [here](https://netfilx-ui.onrender.com/).
 
 ***
 
