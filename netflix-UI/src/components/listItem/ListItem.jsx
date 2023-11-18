@@ -29,16 +29,6 @@ const ListItem = ({ index, movie, type }) => {
 
 	const dispatch = useDispatch()
 
-	// const [isSaved, setIsSaved] = useState(false)
-	// console.log(movie)
-
-	// const hours = Math.floor(runtime / 60)
-	// const mins = runtime % 60
-
-	// const UsRating = releaseDates.filter(function (item) {
-	// 	return item.iso_3166_1 === 'US'
-	// })
-	// const rating = UsRating[0]?.release_dates[0]?.certification
 	useEffect(() => {
 		const getMovieTrailer = async () => {
 			if (type === 'movie') {

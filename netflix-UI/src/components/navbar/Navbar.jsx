@@ -1,5 +1,5 @@
 import './navbar.scss'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'

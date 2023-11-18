@@ -1,5 +1,5 @@
 import './home.scss'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -22,7 +22,6 @@ const Home = () => {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
-	// const [featuredLogo, setFeaturedLogo] = useState({})
 
 	const dispatch = useDispatch()
 
@@ -31,30 +30,20 @@ const Home = () => {
 		dispatch(getAllUsers())
 	}, [])
 
-
-
 	useEffect(() => {
 		if (genresLoaded) {
-		dispatch(fetchMovies({ genres, type: 'movie' }))
-		dispatch(fetchShows({ genres, type: 'tv' }))
-		dispatch(getSavedList({ email }))
+			dispatch(fetchMovies({ genres, type: 'movie' }))
+			dispatch(fetchShows({ genres, type: 'tv' }))
+			dispatch(getSavedList({ email }))
 		}
-
-	}, [genres, dispatch])
-
-
-	
-
+	}, [genres, dispatch, email, genresLoaded])
 
 	return (
 		<div className="home">
 			<Navbar />
 			<Featured genres={genres} itemList={movies} i={4} />
 			<div className="listContainer">
-				<HomeLists
-					movies={movies}
-					shows={shows}
-				/>
+				<HomeLists movies={movies} shows={shows} />
 			</div>
 		</div>
 	)

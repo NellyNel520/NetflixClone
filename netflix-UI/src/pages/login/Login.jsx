@@ -6,8 +6,7 @@ import { firebaseAuth } from '../../utils/firebase'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
-
-// alert imports
+// Alert imports
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
@@ -68,7 +67,7 @@ const Login = () => {
 								<input
 									type="email"
 									placeholder="Email or phone number"
-                  onChange={handleChange('email')}
+									onChange={handleChange('email')}
 									onBlur={handleBlur('email')}
 									value={values.email}
 									className={`input ${
@@ -107,9 +106,9 @@ const Login = () => {
 								</div>
 
 								<div className="signupLink">
-									New to Netflix? 
-                  <Link to={'/signup'}>
-									<b>Sign up now</b>
+									New to Netflix?
+									<Link to={'/signup'}>
+										<b>Sign up now</b>
 									</Link>
 								</div>
 								<small>
@@ -118,7 +117,7 @@ const Login = () => {
 								</small>
 							</form>
 
-              {isError && (
+							{isError && (
 								<Alert
 									severity="error"
 									action={

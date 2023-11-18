@@ -27,14 +27,12 @@ const Signup = () => {
 		setEmail(emailRef.current.value)
 	}
 
-
-
 	const handleFinish = async (email, password, username) => {
 		try {
 			await createUserWithEmailAndPassword(firebaseAuth, email, password)
 			await registerUser({
 				username,
-				email
+				email,
 			})
 		} catch (error) {
 			console.log(error)
@@ -64,9 +62,7 @@ const Signup = () => {
 				<Formik
 					initialValues={{ email: '', password: '', username: '' }}
 					onSubmit={(values) => {
-						handleFinish(values.email, values.password, 
-            values.username
-            )
+						handleFinish(values.email, values.password, values.username)
 						// console.log(values.email, values.password, values.username)
 					}}
 					validationSchema={signupFormSchema}

@@ -31,41 +31,28 @@ const TrendingItem = ({ index, item, type }) => {
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			if(type === 'movie') {
+			if (type === 'movie') {
 				await movieTrailer(item.name, {
 					id: true,
 					multi: true,
-				
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			} else {
 				await movieTrailer(item.name, {
 					id: true,
 					videoType: 'tv',
 					multi: true,
-
-				
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			}
-
-
-			
 		}
 
 		const isItemSaved = () => {
 			try {
 				let saved = savedList.find((o) => o.id === item.id)
 				if (saved) {
-					// setIsLiked(true)
 					setIsSaved(true)
 				}
 			} catch (error) {
@@ -92,12 +79,11 @@ const TrendingItem = ({ index, item, type }) => {
 
 	const removeFromList = async () => {
 		try {
-			await dispatch(removeMovieFromLiked({ email, movieId: item.id}))
+			await dispatch(removeMovieFromLiked({ email, movieId: item.id }))
 			setIsSaved(false)
-			
 		} catch (error) {
 			console.log(error)
-		} 
+		}
 	}
 	return (
 		<div
@@ -157,14 +143,12 @@ const TrendingItem = ({ index, item, type }) => {
 										onClick={addToList}
 									/>
 								)}
-               
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
 
 							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
-
 
 						<div className="genre">
 							{item.genres.map((name) => (

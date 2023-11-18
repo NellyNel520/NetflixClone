@@ -6,16 +6,14 @@ import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutl
 import YouTube from 'react-youtube'
 
 const Watch = () => {
-  const location = useLocation()
+	const location = useLocation()
 	let navigate = useNavigate()
 	const videoId = location.state.videoId
 
-
-  return (
+	return (
 		<div className="watch">
 			<div className="back" onClick={() => navigate(-1)}>
 				<ArrowBackIosNewOutlinedIcon />
-				{/* Home */}
 			</div>
 			<YouTube
 				videoId={videoId}

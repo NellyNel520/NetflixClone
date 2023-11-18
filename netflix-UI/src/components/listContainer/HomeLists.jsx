@@ -2,8 +2,6 @@
 import React from 'react'
 import List from '../list/List'
 import TrendingList from '../trendingList/TrendingList'
-// import ShowList from '../list/ShowList'
-// import TrendingShowList from '../trendingList/TrendingShowList'
 
 const HomeLists = ({ movies, shows }) => {
 	const getMoviesFromRange = (from, to) => {
@@ -13,7 +11,7 @@ const HomeLists = ({ movies, shows }) => {
 		return shows.slice(from, to)
 	}
 
-	return ( 
+	return (
 		<div>
 			<List
 				data={getMoviesFromRange(11, 25)}
@@ -41,11 +39,7 @@ const HomeLists = ({ movies, shows }) => {
 				type="tv"
 			/>
 			<List data={getMoviesFromRange(41, 55)} title="Must Watch" />
-			<List
-				data={getShowsFromRange(11, 25)}
-				type="tv"
-				title="Binge Worthy"
-			/>
+			<List data={getShowsFromRange(11, 25)} type="tv" title="Binge Worthy" />
 			<List
 				data={getShowsFromRange(26, 40)}
 				type="tv"

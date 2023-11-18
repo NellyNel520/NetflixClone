@@ -5,24 +5,21 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import SelectGenre from '../selectGenre/SelectGenre'
 import movieTrailer from 'movie-trailer'
-import YouTube from 'react-youtube'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-
 const Featured = ({ type, genres, itemList, i }) => {
-
-  const BASE_URL = 'https://image.tmdb.org/t/p/original'
-  const id = itemList[i]?.id
+	const BASE_URL = 'https://image.tmdb.org/t/p/original'
+	const id = itemList[i]?.id
 	const title = itemList[i]?.name
 	const image = itemList[i]?.image
 	const details = itemList[i]?.overview
 	const detailsLength = itemList[i]?.overview.length
 	const [videoId, setVideoId] = useState('')
-  const [itemLogo, setItemLogo] = useState({})
+	const [itemLogo, setItemLogo] = useState({})
 	const navigate = useNavigate()
 
-  useEffect(() => {
+	useEffect(() => {
 		if (type) {
 			axios
 				.get(
@@ -30,12 +27,11 @@ const Featured = ({ type, genres, itemList, i }) => {
 			`
 				)
 				.then((response) => {
-					// console.log(response.data.logos, 'logo line 28')
 					setItemLogo(response.data.logos[0].file_path)
 				})
-			// .catch((error) => {
-			// 	console.log(error)
-			// })
+				.catch((error) => {
+					console.log(error)
+				})
 		} else {
 			axios
 				.get(
@@ -43,60 +39,45 @@ const Featured = ({ type, genres, itemList, i }) => {
 			`
 				)
 				.then((response) => {
-					// console.log(response.data.logos, 'logo line 37')
 					setItemLogo(response.data.logos[0].file_path)
 				})
-			// .catch((error) => {
-			// 	console.log(error)
-			// })
+				.catch((error) => {
+					console.log(error)
+				})
 		}
 	})
 
 	useEffect(() => {
 		const getMovieTrailer = async () => {
-			if(type === 'movie') {
+			if (type === 'movie') {
 				await movieTrailer(title, {
 					id: true,
 					multi: true,
-				
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			} else {
 				await movieTrailer(title, {
 					id: true,
 					videoType: 'tv',
 					multi: true,
-
-				
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			}
-
-
-			
 		}
 
 		getMovieTrailer()
 	}, [title, type])
 
-
-  return (
-  <div className="featured">
+	return (
+		<div className="featured">
 			{type === 'movie' && <SelectGenre type={type} genres={genres} />}
 
 			{type === 'tv' && <SelectGenre type={type} genres={genres} />}
 
-      {/* <img src='https://wallpapers.com/images/hd/vivo-movie-desktop-poster-yxw247ste4wik43s.jpg' alt="movie"  /> */}
+			{/* <img src='https://wallpapers.com/images/hd/vivo-movie-desktop-poster-yxw247ste4wik43s.jpg' alt="movie"  /> */}
 			<img src={`${BASE_URL}/${image}`} alt="movie" />
-
 
 			<div className="info">
 				{/* <img src='https://www.themoviedb.org/t/p/original/AsoF5slprur9YMifq9vUci0xnSg.png' alt="movie logo" /> */}
@@ -104,7 +85,7 @@ const Featured = ({ type, genres, itemList, i }) => {
 
 				<span className="desc">
 					{detailsLength > 150 ? `${details.substring(0, 180)}...` : details}
-          {/* Parents need to know that Vivo is a touching animated musical about a one-of-a-kind singing kinkajou (voiced by Lin-Manuel Miranda) who has a great life in Havana with acclaimed aging bandleader Andrés (Cuban musician Juan de Marcos González) */}
+					{/* Parents need to know that Vivo is a touching animated musical about a one-of-a-kind singing kinkajou (voiced by Lin-Manuel Miranda) who has a great life in Havana with acclaimed aging bandleader Andrés (Cuban musician Juan de Marcos González) */}
 				</span>
 				<div className="buttons">
 					<button
@@ -126,7 +107,7 @@ const Featured = ({ type, genres, itemList, i }) => {
 				</div>
 			</div>
 		</div>
-  )
+	)
 }
 
 export default Featured

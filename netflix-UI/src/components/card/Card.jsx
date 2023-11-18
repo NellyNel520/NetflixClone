@@ -5,20 +5,17 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import movieTrailer from 'movie-trailer'
 import YouTube from 'react-youtube'
-import axios from 'axios'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeMovieFromLiked } from '../../store'
-import { MONGO_DB_BASE_URL } from '../../utils/constants'
 // Icons
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 
-const Card = ({ index, movie, genres, type }) => {
+const Card = ({ movie, type }) => {
 	const [isHovered, setIsHovered] = useState(false)
 	const [videoId, setVideoId] = useState('')
 	const BASE_URL = 'https://image.tmdb.org/t/p/original'
@@ -26,7 +23,6 @@ const Card = ({ index, movie, genres, type }) => {
 	const { currentUser } = useContext(AuthContext)
 	const email = currentUser.email
 	const savedList = useSelector((state) => state.netflix.savedList)
-	// const [isSaved, setIsSaved] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -37,10 +33,7 @@ const Card = ({ index, movie, genres, type }) => {
 					id: true,
 					multi: true,
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			} else {
 				await movieTrailer(movie.name, {
@@ -48,34 +41,17 @@ const Card = ({ index, movie, genres, type }) => {
 					videoType: 'tv',
 					multi: true,
 				})
-					.then((response) =>
-						// console.log(response, 'herrrreeeee')
-						setVideoId(response[1])
-					)
+					.then((response) => setVideoId(response[1]))
 					.catch((err) => console.log(err))
 			}
 		}
 
-		// const isItemSaved = () => {
-		// 	try {
-		// 		let saved = savedList.find((o) => o.id === movie.id)
-		// 		if (saved) {
-		// 			setIsSaved(true)
-		// 		}
-		// 	} catch (error) {
-		// 		console.log(error)
-		// 	}
-		// }
-
 		getMovieTrailer()
-		// isItemSaved()
 	}, [movie, type, savedList])
-
 
 	const removeFromList = async () => {
 		try {
 			dispatch(removeMovieFromLiked({ email, movieId: movie.id }))
-			// setIsSaved(false)
 		} catch (error) {
 			console.log(error)
 		}
@@ -83,7 +59,6 @@ const Card = ({ index, movie, genres, type }) => {
 	return (
 		<div
 			className="card"
-			// style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
@@ -119,46 +94,18 @@ const Card = ({ index, movie, genres, type }) => {
 									}
 								/>
 
-								{/* ******************* on click add to my list mongo db *****************/}
-
-								{/* {isSaved ? (
-									<CheckIcon
-										className="icon"
-										title="Already saved"
-										onClick={removeFromList}
-									/>
-								) : (
-									<AddIcon
-										className="icon"
-										title="Add to my list"
-										onClick={addToList}
-									/>
-								)} */}
+								{/* ******************* on click remove from saved list mongo db *****************/}
 
 								<CheckIcon
-										className="icon"
-										title="Already saved"
-										onClick={removeFromList}
-									/>
+									className="icon"
+									title="Already saved"
+									onClick={removeFromList}
+								/>
 
 								<ThumbUpAltOutlinedIcon className="icon" />
 							</div>
 							<KeyboardArrowDownOutlinedIcon className="infoIcon" />
 						</div>
-
-						{/* <div className="itemInfoTop">
-							{rating ? (
-								<span className="limit">{rating}</span>
-							) : (
-								<span className="limit">NR</span>
-							)}
-
-							<span className="time">
-								{runtime > 60 ? `${hours}h ${mins}m` : `${runtime}m`}
-							</span>
-
-							<span className="limit">4K</span>
-						</div> */}
 
 						<div className="genre">
 							{movie.genres.map((name) => (
