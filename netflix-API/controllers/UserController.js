@@ -80,7 +80,7 @@ const addToLikedMovies =  async (req, res) => {
   } catch (error) {
     return res.json({ msg: "Error adding movie to the liked list" });
   }
-};
+}; 
 
 
 
@@ -100,8 +100,9 @@ const removeFromLikedMovies = async (req, res) => {
           },
           { new: true }
           );
+          
         } else return res.status(400).send({ msg: "Movie not found." });
-      return res.json({ msg: "Movie successfully removed.", movies });
+      return  res.status(200).send({ msg: "Movie successfully removed.", movies });
     } else return res.json({ msg: "User with given email not found." });
   } catch (error) {
     return res.json({ msg: "Error removing movie from the liked list" });
