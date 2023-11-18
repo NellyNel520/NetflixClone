@@ -7,6 +7,10 @@ import * as Yup from 'yup'
 import { Formik } from 'formik'
 import Validator from 'email-validator'
 import './signup.scss'
+// Alert imports 
+// import Alert from '@mui/material/Alert'
+// import IconButton from '@mui/material/IconButton'
+// import CloseIcon from '@mui/icons-material/Close'
 
 const signupFormSchema = Yup.object().shape({
 	email: Yup.string().email().required('An email is required'),
