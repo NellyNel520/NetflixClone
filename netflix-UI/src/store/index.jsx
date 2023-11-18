@@ -14,6 +14,7 @@ const initialState = {
 	shows: [],
 	users: [],
 	savedList: [],
+	savedListLoaded: false,
 }
 
 export const getGenres = createAsyncThunk('netflix/genres', async () => {
@@ -115,31 +116,47 @@ export const getAllUsers = createAsyncThunk('netflix/users', async () => {
 	} = await axios.get(`${MONGO_DB_BASE_URL}/user/all-users`)
 	return users
 })
-// export const fetchShows = createAsyncThunk(
-// 	'netflix/trendingShows',
-// 	async ({ type }, thunkAPI) => {
-// 		const {
-// 			netflix: { genres },
-// 		} = thunkAPI.getState()
-// 		return getRawData(
-// 			`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
-// 			genres,
-// 			true
-// 		)
-// 	}
-// )
 
-export const getSavedList = createAsyncThunk(
-	'netflix/saved-list',
-	async ({ users, email }) => {
-		let user = users.find((o) => o.email === email)
+const getUserData = async (api, users, email) => {
+	let user = users.find((o) => o.email === email)
 		let id = user._id
 		const {
 			data: { savedList },
-		} = await axios.get(`${MONGO_DB_BASE_URL}/user/savedList/${id}`)
-		return savedList
+		} = await axios.get(`${api}/${id}`)
+	
+	return savedList
+}
+
+
+
+export const getSavedList = createAsyncThunk(
+	'netflix/saved-list',
+	async ({ email }, thunkAPI) => {
+		const {
+						netflix: { users },
+					} = thunkAPI.getState()
+					return getUserData(
+						`${MONGO_DB_BASE_URL}/user/savedList`,
+						users,
+						email,
+						true
+					)
 	}
 ) 
+
+// export const getSavedList = createAsyncThunk(
+// 	'netflix/saved-list',
+// 	async ({ users, email }) => {
+// 		let user = users.find((o) => o.email === email)
+// 		let id = user._id
+// 		const {
+// 			data: { savedList },
+// 		} = await axios.get(`${MONGO_DB_BASE_URL}/user/savedList/${id}`)
+// 		return savedList
+// 	}
+// ) 
+
+
 
 export const removeMovieFromLiked = createAsyncThunk(
 	'netflix/deleteLiked',
@@ -175,7 +192,7 @@ const NetflixSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getGenres.fulfilled, (state, action) => {
 			state.genres = action.payload
-			// state.genresLoaded = true
+			state.genresLoaded = true
 		})
 		builder.addCase(fetchMovies.fulfilled, (state, action) => {
 			state.movies = action.payload
@@ -195,6 +212,7 @@ const NetflixSlice = createSlice({
 		})
 		builder.addCase(getSavedList.fulfilled, (state, action) => {
 			state.savedList = action.payload
+			state.savedListLoaded = true
 		})
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
 			// state.savedList = action.payload

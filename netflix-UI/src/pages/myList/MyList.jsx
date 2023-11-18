@@ -10,16 +10,14 @@ import Card from '../../components/card/Card'
 
 const MyList = () => { 
   const { currentUser } = useContext(AuthContext)
-	const email = currentUser.email
-	const users = useSelector((state) => state.netflix.users)
+	const email = currentUser.email 
 	const savedList = useSelector((state) => state.netflix.savedList)
 
 	// const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	useEffect(() => { 
-		dispatch(getAllUsers())
-		dispatch(getSavedList({ users, email }))
+		dispatch(getSavedList({email }))
 	}, [])
 
 	// console.log(savedList)
