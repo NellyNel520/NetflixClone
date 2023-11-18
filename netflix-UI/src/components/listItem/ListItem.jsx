@@ -143,11 +143,11 @@ const ListItem = ({ index, movie, type }) => {
 							<div>
 								<PlayArrowIcon
 									className="icon"
-									// onClick={() =>
-									// 	navigate('/watch', {
-									// 		state: { videoId: videoId, movie: movie },
-									// 	})
-									// }
+									onClick={() =>
+										navigate('/watch', {
+											state: { videoId: videoId, movie: movie },
+										})
+									}
 								/>
 
 								{/* ******************* on click add to my list mongo db *****************/}
