@@ -23,6 +23,9 @@ const Home = () => {
 	const email = currentUser.email
 	const genresLoaded = useSelector((state) => state.netflix.genresLoaded)
 
+	
+	
+
 	const dispatch = useDispatch()
 
 	useEffect(() => {

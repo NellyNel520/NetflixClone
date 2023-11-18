@@ -1,8 +1,11 @@
 import './navbar.scss'
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { firebaseAuth } from '../../utils/firebase'
+import { AuthContext } from '../../context/AuthContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllUsers } from '../../store'
 // Icons
 import SearchIcon from '@mui/icons-material/Search'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -10,17 +13,44 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import kidsLogo from '../../assets/netflixKids-logo.png'
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
+	const [isScrolled, setIsScrolled] = useState(false)
 	const [showSearch, setShowSearch] = useState(false)
 	const [inputHover, setInputHover] = useState(false)
+	const usersLoaded = useSelector((state) => state.netflix.usersLoaded)
+	const { currentUser } = useContext(AuthContext)
+	const email = currentUser.email
+	const users = useSelector((state) => state.netflix.users)
+	const [username, setUsername] = useState('')
+	// const user = users.find((o) => o.email === email)
+	const dispatch = useDispatch()
 
-  window.onscroll = () => {
+	console.log(users)
+
+	window.onscroll = () => {
 		setIsScrolled(window.pageYOffset === 0 ? false : true)
 		return () => (window.onscroll = null)
 	}
 
-  return (
-    <div className={isScrolled ? 'navbar scrolled' : 'navbar'}>
+	useEffect(() => {
+		dispatch(getAllUsers())
+	}, [dispatch])
+
+	useEffect(() => {
+		if (usersLoaded) {
+			try {
+				let user = users.find((o) => o.email === email)
+				setUsername(user.username)
+			} catch (error) {
+				console.log(error)
+			}
+		}
+	}, [usersLoaded, email, users])
+	console.log(username)
+
+	
+
+	return (
+		<div className={isScrolled ? 'navbar scrolled' : 'navbar'}>
 			<div className="container">
 				<div className="left">
 					<img
@@ -75,8 +105,8 @@ const Navbar = () => {
 							alt=""
 							src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.jpg"
 						/>
-						{/* <p>{username}</p> */}
-            <p>NellyNel</p>
+						<p>{username}</p>
+						{/* <p>NellyNel</p> */}
 					</div>
 					<div className="profile">
 						<ArrowDropDownIcon className="icon" />
@@ -88,7 +118,7 @@ const Navbar = () => {
 				</div>
 			</div>
 		</div>
-  )
+	)
 }
 
 export default Navbar
