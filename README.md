@@ -65,6 +65,15 @@ The project itself was deployed and can be viewed [here](https://netfilx-ui.onre
 
 *** 
 
+### Screen Shots
+![signupScreen](https://github.com/NellyNel520/NetflixClone/assets/117863144/258d9e58-58df-441a-81a1-06199cf15292)
+![homeScreen](https://github.com/NellyNel520/NetflixClone/assets/117863144/97844c39-ee1f-42e6-9c25-6cf430140716)
+![homeScreen2](https://github.com/NellyNel520/NetflixClone/assets/117863144/232f90d6-d7ed-413f-bf5b-d8749856370e)
+![moviesScreen](https://github.com/NellyNel520/NetflixClone/assets/117863144/3a1ce3bb-4f98-4852-b65f-b3035bd3b40d)
+![showScreen](https://github.com/NellyNel520/NetflixClone/assets/117863144/8639d19c-33ec-4bee-9466-507e8e502277)
+
+
+
 ### ***Future Updates***
 
 - [] Search Screen
