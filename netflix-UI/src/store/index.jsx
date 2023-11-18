@@ -197,11 +197,11 @@ const NetflixSlice = createSlice({
 			state.savedList = action.payload
 		})
 		builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
-			state.savedList = action.payload
-			// state.savedList.splice(
-			// 	state.savedList.findIndex((item) => item.id === action.payload),
-			// 	1
-			// )
+			// state.savedList = action.payload
+			state.savedList.splice(
+				state.savedList.findIndex((item) => item.id === action.payload),
+				1
+			)
 		})
 	},
 })

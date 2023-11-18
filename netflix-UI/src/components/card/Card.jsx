@@ -75,7 +75,7 @@ const Card = ({ index, movie, genres, type }) => {
 	const removeFromList = async () => {
 		try {
 			dispatch(removeMovieFromLiked({ email, movieId: movie.id }))
-			setIsSaved(false)
+			// setIsSaved(false)
 		} catch (error) {
 			console.log(error)
 		}
